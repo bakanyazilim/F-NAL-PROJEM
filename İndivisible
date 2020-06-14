@@ -1,0 +1,29 @@
+**
+ * IndivisibleByTwenty.java - User-defined checked exception
+ * @author Andrew Eissen
+ * Date: 09/06/20
+ */
+
+package atm;
+
+class IndivisibleByTwenty extends Exception {
+    
+    public IndivisibleByTwenty() {
+        super();
+    }
+
+   
+    public IndivisibleByTwenty(String message) {
+       super(message);
+    }
+
+  
+    public IndivisibleByTwenty(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+   
+    public IndivisibleByTwenty(Throwable cause) {
+        super(cause);
+    }
+}
