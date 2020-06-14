@@ -1,0 +1,83 @@
+/**
+ * Account.java - Basic account class
+ * @author Berat Bakan
+ * Date: 09/06/20
+ */
+
+package atm;
+
+public class Hesap {
+    private static int numWithdraws = 0;
+    private static final double SERVICE_FEE = 1.50;
+
+    private String isim;
+    private double balance;
+
+    
+    public Hesap(String isim, double initialBalance) {
+        this.setName(isim);
+        this.setBalance(initialBalance);
+    }
+
+    
+    public Hesap() {
+        this.setName("Account");
+        this.setBalance(0.0);
+    }
+
+  
+    private void setName(String name) {
+        this.isim = name;
+    }
+
+   
+    private void setBalance(double balance) {
+        if (balance >= 0.0) {
+            this.balance = balance;
+        } else {
+            this.balance = 0.0;
+        }
+    }
+
+    
+    public String getName() {
+        return this.isim;
+    }
+
+   
+    public double getBalance() {
+        return this.balance;
+    }
+
+    
+    public static int getNumWithdraws() {
+        return Account.numWithdraws;
+    }
+
+    
+    public double withdrawAndReturnBalance(double desiredWithdraw) throws InsufficientFunds {
+        Account.numWithdraws++;
+        if (Account.numWithdraws > 4) {
+            desiredWithdraw += Account.SERVICE_FEE;
+        }
+        
+        if (desiredWithdraw > this.getBalance()) {
+            throw new InsufficientFunds();
+        }
+        
+        this.setBalance(this.balance - desiredWithdraw);
+        return this.getBalance();
+    }
+
+    
+    public double depositAndReturnBalance(double desiredDeposit) {
+        this.setBalance(this.balance + desiredDeposit);
+        return this.getBalance();
+    }
+
+    
+    public double transferAndReturnBalance(double desiredTransfer) {
+        this.setBalance(this.balance - desiredTransfer);
+        return this.getBalance();
+    }
+}
