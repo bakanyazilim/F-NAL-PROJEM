@@ -1,0 +1,117 @@
+     * @param String title
+     * @param int status
+     * @return void
+     */
+    private void displayStatusPanel(String message, String title, int status) {
+        JOptionPane.showMessageDialog(mainPanel, message, title, status);
+    }
+
+    /**
+     * Custom popup for InsufficientFunds error
+     * @return void
+     */
+    private void displayInsufficientFundsPanel() {
+        JOptionPane.showMessageDialog(
+            mainPanel,
+            "Error: Not enough money in account.",
+            "InsufficientFunds error",
+            JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    /**
+     * Custom popup for NegativeInput error
+     * @return void
+     */
+    private void displayNegativeInputPanel() {
+        JOptionPane.showMessageDialog(
+            mainPanel,
+            "Error: Input must be positive.",
+            "NegativeInput error",
+            JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    /**
+     * Custom popup for NumberFormatException error
+     * @return void
+     */
+    private void displayNumberFormatExceptionPanel() {
+        JOptionPane.showMessageDialog(
+            mainPanel,
+            "Error: Improper input detected.",
+            "NumberFormatException error",
+            JOptionPane.WARNING_MESSAGE
+        );
+    }
+
+    /**
+     * Main method of the class, with two Account objects as requested.
+     * @param String[] args
+     */
+    public static void main(String[] args) {
+        // Instances
+        GUI newGUI = new GUI("ATM Machine", 400, 200);
+        Account checkingAccount = new Account("Checking", 0.0);
+        Account savingsAccount = new Account("Savings", 0.0);
+
+        // Construct the user interface
+        newGUI.constructGUI(checkingAccount, savingsAccount);
+    }
+
+    /**
+     * Event listener adapter class
+     * Extends MouseAdapter
+     */
+    class AccountMouseAdapter extends MouseAdapter {
+        private String methodName;
+        private Account selectedAccount, alternate, myCheckingAccount, mySavingsAccount;
+
+        /**
+         * Parameterized constructor
+         * @param String methodName
+         * @param Account myCheckingAccount
+         * @param Account mySavingsAccount
+         */
+        public AccountMouseAdapter(
+            String methodName,
+            Account myCheckingAccount,
+            Account mySavingsAccount
+        ) {
+            this.methodName = methodName;
+            this.myCheckingAccount = myCheckingAccount;
+            this.mySavingsAccount = mySavingsAccount;
+        }
+
+        /**
+         * Overridden method that handles mouse click events
+         * @param MouseEvent e
+         * @return void
+         */
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if ("Checking".equals(radioGroup.getSelection().getActionCommand())) {
+                this.selectedAccount = myCheckingAccount;
+                this.alternate = mySavingsAccount;
+            } else if ("Savings".equals(radioGroup.getSelection().getActionCommand())) {
+                this.selectedAccount = mySavingsAccount;
+                this.alternate = myCheckingAccount;
+            }
+
+            switch(methodName) {
+                case "withdraw":
+                    handleWithdraw(selectedAccount);
+                    break;
+                case "deposit":
+                    handleDeposit(selectedAccount);
+                    break;
+                case "transfer":
+                    handleTransferTo(selectedAccount, alternate);
+                    break;
+                case "balance":
+                    handleBalance(selectedAccount);
+                    break;
+            }
+        }
+    }
+}
