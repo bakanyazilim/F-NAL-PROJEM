@@ -1,0 +1,29 @@
+/**
+ * InsufficientFunds.java - User-defined checked exception
+ * @author Andrew Eissen
+ * Date: 09/06/20
+ */
+
+package atm;
+
+class InsufficientFunds extends Exception {
+    
+    public InsufficientFunds() {
+        super();
+    }
+
+   
+    public InsufficientFunds(String message) {
+       super(message);
+    }
+
+    
+    public InsufficientFunds(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+  
+    public InsufficientFunds(Throwable cause) {
+        super(cause);
+    }
+}
